@@ -1,0 +1,243 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "fb470cab06be2aa00bd0",
+  "position": {
+    "x": 0,
+    "y": 110.37656099903938,
+    "z": 1000,
+    "height": 609.33909702209417,
+    "width": 1574,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "rdlVisual",
+    "query": {
+      "queryState": {
+        "parameterValues": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "SpecialDates"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "Function": 3
+                }
+              },
+              "queryRef": "SpecialDates.Date",
+              "nativeQueryRef": "Earliest Date"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "SpecialDates"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "Function": 4
+                }
+              },
+              "queryRef": "SpecialDates.Date1",
+              "nativeQueryRef": "Latest Date"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Code"
+                    }
+                  },
+                  "Property": "SMTRCD"
+                }
+              },
+              "queryRef": "Code.SMTRCD",
+              "nativeQueryRef": "SMTRCD"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Prefix"
+                    }
+                  },
+                  "Property": "SMPRFX"
+                }
+              },
+              "queryRef": "Prefix.SMPRFX",
+              "nativeQueryRef": "SMPRFX"
+            }
+          ],
+          "showAll": true
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "SpecialDates"
+                      }
+                    },
+                    "Property": "Date"
+                  }
+                },
+                "Function": 3
+              }
+            },
+            "direction": "Ascending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "reportInfo": [
+        {
+          "properties": {
+            "reference": {
+              "kind": "ItemLocation",
+              "byReference": {
+                "itemId": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'3ba668fd-1dc5-4d25-bc58-2a8efde185b9'"
+                    }
+                  }
+                },
+                "workspaceId": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'deec0531-b576-4750-a523-152853018ac3'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "parameterMapping": [
+        {
+          "properties": {
+            "mappings": {
+              "expr": {
+                "Literal": {
+                  "Value": "'[{\"paramName\":\"Code1\",\"fieldName\":\"Code.SMTRCD\",\"fieldDisplayName\":\"SMTRCD\",\"isMultiValue\":true},{\"paramName\":\"Start_Date\",\"fieldName\":\"SpecialDates.Date\",\"fieldDisplayName\":\"Earliest Date\",\"isMultiValue\":false},{\"paramName\":\"End_Date\",\"fieldName\":\"SpecialDates.Date1\",\"fieldDisplayName\":\"Latest Date\",\"isMultiValue\":false},{\"paramName\":\"Prefix\",\"fieldName\":\"Prefix.SMPRFX\",\"fieldDisplayName\":\"SMPRFX\",\"isMultiValue\":true}]'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "autoFilter": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "export": [
+        {
+          "properties": {
+            "exportAccessiblePDF": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "exportPPTX": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "exportWord": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "exportMHTML": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "exportXML": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "toolbar": [
+        {
+          "properties": {
+            "openReportButton": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "paramButton": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

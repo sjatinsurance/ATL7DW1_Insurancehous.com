@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "d69a84822ac26e0d867d",
+  "position": {
+    "x": 0,
+    "y": 48.384245917387126,
+    "z": 2000,
+    "height": 55.944284341978864,
+    "width": 270.6493756003843,
+    "tabOrder": 7000
+  },
+  "visualGroup": {
+    "displayName": "Date Range",
+    "groupMode": "ScaleMode"
+  }
+}
