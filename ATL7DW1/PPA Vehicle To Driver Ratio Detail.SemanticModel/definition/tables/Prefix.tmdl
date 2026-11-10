@@ -1,0 +1,31 @@
+table Prefix
+	lineageTag: 0ffbcbd2-33ea-4154-becd-2e0b5d64935f
+
+	column SMPRFX
+		dataType: string
+		lineageTag: 51ce9d37-1c3d-43ca-92d6-96ace53f2017
+		summarizeBy: none
+		sourceColumn: SMPRFX
+
+		annotation SummarizationSetBy = Automatic
+
+	column ID = 0
+		formatString: 0
+		lineageTag: e12f868a-f448-483f-a7b2-2180da77e18d
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Prefix = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("ATL1DW1", "sis_core_dw", [Query="select Distinct SMPRFX from sisprdd250.ST_ALSTMF"]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each true)
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

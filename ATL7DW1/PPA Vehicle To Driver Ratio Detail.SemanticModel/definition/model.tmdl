@@ -1,0 +1,26 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["IH_ADGroup","Code","Prefix"]
+
+annotation PBIDesktopVersion = 2.145.1457.0 (25.07)+6e87ffa743c5aa106a85a0b5e383d76d522045ba
+
+ref table DateTableTemplate_1e3e73ac-377e-4ee9-9299-d4e2cc8db607
+ref table IH_ADGroup
+ref table LocalDateTable_128e5b44-d9b5-4b2d-b9e3-e14e2b676a49
+ref table LocalDateTable_9e4feda9-55cc-4089-9ce4-e01be26a19a6
+ref table Code
+ref table LocalDateTable_6ef263c6-6301-448b-bd62-b934c7c089cc
+ref table SpecialDates
+ref table Prefix
+ref table LocalDateTable_8f127bcc-ccdd-41ab-9265-a9a662b33416
+
+ref cultureInfo en-US
+

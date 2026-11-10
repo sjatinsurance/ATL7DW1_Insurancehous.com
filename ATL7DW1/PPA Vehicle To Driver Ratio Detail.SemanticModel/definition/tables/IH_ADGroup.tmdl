@@ -1,0 +1,137 @@
+table IH_ADGroup
+	lineageTag: 0d1d8f8a-cd81-4731-a57b-985dc1bbc7d7
+
+	column Name
+		dataType: string
+		lineageTag: ed905da7-84c3-47b5-a5af-a081996e67dc
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Manager
+		dataType: string
+		lineageTag: dbd1c23d-315d-4b82-8b92-fb926fbbb8dd
+		summarizeBy: none
+		sourceColumn: Manager
+
+		annotation SummarizationSetBy = Automatic
+
+	column mail
+		dataType: string
+		lineageTag: 573dc1ed-81d2-4ab4-a79c-384501bd8c60
+		summarizeBy: none
+		sourceColumn: mail
+
+		annotation SummarizationSetBy = Automatic
+
+	column mailNickname
+		dataType: string
+		lineageTag: c23aa2d9-c434-4e30-aa1f-d7bf6f6f2ade
+		summarizeBy: none
+		sourceColumn: mailNickname
+
+		annotation SummarizationSetBy = Automatic
+
+	column CanonicalName
+		dataType: string
+		lineageTag: f71f7da2-e2d9-40d0-b00e-bf99c4d49647
+		summarizeBy: none
+		sourceColumn: CanonicalName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: b4cb363f-366f-4b5a-980f-2b8eda9d2b5b
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column Enabled
+		dataType: string
+		lineageTag: 5766ce55-7f76-4691-b70b-651a9451eee4
+		summarizeBy: none
+		sourceColumn: Enabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column Title
+		dataType: string
+		lineageTag: 337a8efa-fb19-46e9-816e-b4981da276dc
+		summarizeBy: none
+		sourceColumn: Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column ObjectClass
+		dataType: string
+		lineageTag: 72ae7af4-10c4-4b8e-b1ca-d9b30d777881
+		summarizeBy: none
+		sourceColumn: ObjectClass
+
+		annotation SummarizationSetBy = Automatic
+
+	column TelephoneNumber
+		dataType: string
+		lineageTag: 01f74dee-30c5-46b2-bd9a-1492017576f9
+		summarizeBy: none
+		sourceColumn: TelephoneNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedOn
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b126d271-8a14-4504-a927-2ff40b75a438
+		summarizeBy: none
+		sourceColumn: CreatedOn
+
+		variation Variation
+			isDefault
+			relationship: 3c7ae8e3-4851-41a7-b7ec-dcdd3eda126b
+			defaultHierarchy: LocalDateTable_128e5b44-d9b5-4b2d-b9e3-e14e2b676a49.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column UpdatedOn
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1a5ac8a7-b30a-4c1e-a799-108feaeccdbe
+		summarizeBy: none
+		sourceColumn: UpdatedOn
+
+		variation Variation
+			isDefault
+			relationship: a671957f-4b05-4077-a01a-bbca1dc886e4
+			defaultHierarchy: LocalDateTable_9e4feda9-55cc-4089-9ce4-e01be26a19a6.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column refresh_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4c357e6b-80f9-434a-be32-7be64dd9acc6
+		summarizeBy: none
+		sourceColumn: refresh_Date
+
+		variation Variation
+			isDefault
+			relationship: 1c836f79-bb8c-4d5c-bc66-c6a82e95dd10
+			defaultHierarchy: LocalDateTable_6ef263c6-6301-448b-bd62-b934c7c089cc.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	partition IH_ADGroup = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("ATL1DW1", "sis_core_dw", [Query="select *,GetDate() as refresh_Date from IH_ADGroup"])
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

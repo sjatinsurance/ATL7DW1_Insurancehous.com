@@ -1,0 +1,26 @@
+relationship 3c7ae8e3-4851-41a7-b7ec-dcdd3eda126b
+	joinOnDateBehavior: datePartOnly
+	fromColumn: IH_ADGroup.CreatedOn
+	toColumn: LocalDateTable_128e5b44-d9b5-4b2d-b9e3-e14e2b676a49.Date
+
+relationship a671957f-4b05-4077-a01a-bbca1dc886e4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: IH_ADGroup.UpdatedOn
+	toColumn: LocalDateTable_9e4feda9-55cc-4089-9ce4-e01be26a19a6.Date
+
+relationship 1c836f79-bb8c-4d5c-bc66-c6a82e95dd10
+	joinOnDateBehavior: datePartOnly
+	fromColumn: IH_ADGroup.refresh_Date
+	toColumn: LocalDateTable_6ef263c6-6301-448b-bd62-b934c7c089cc.Date
+
+relationship 5e7b8a15-464c-46a5-932e-b0cbec541c83
+	joinOnDateBehavior: datePartOnly
+	fromColumn: SpecialDates.Date
+	toColumn: LocalDateTable_8f127bcc-ccdd-41ab-9265-a9a662b33416.Date
+
+relationship 295f0d47-6069-6611-7a78-1e9d677bc79a
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: Prefix.ID
+	toColumn: Code.ID
+

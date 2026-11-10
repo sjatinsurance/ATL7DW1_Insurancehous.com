@@ -1,0 +1,154 @@
+table SpecialDates
+	lineageTag: a010d350-a77b-4ca2-9d6a-22ab563a9216
+
+	measure ButtonLabel = ```
+			
+			    VAR _selectedperiod = SELECTEDVALUE(SpecialDates[Period])
+			    VAR _start = MIN(SpecialDates[Date])
+			    VAR _end = MAX(SpecialDates[Date])
+			    RETURN SWITCH(true,
+			        _selectedperiod = "Custom...",FORMAT(_start,"mm/dd/yy")&" - "&FORMAT(_end,"mm/dd/yy")&" ✎", 
+			        _selectedperiod = "Today", FORMAT(_start,"mm/dd/yy") ,
+			        _selectedperiod = "Yesterday", FORMAT(_start,"mm/dd/yy") ,
+			        _selectedperiod = "This Business Week", FORMAT(_start,"mm/dd/yy")&" - "&FORMAT(_end,"d mmm yy"),
+			        _selectedperiod = "Last Business Week", FORMAT(_start,"mm/dd/yy")&" - "&FORMAT(_end-2,"mm/dd/yy"),
+			        FORMAT(_start,"mm/dd/yy")&" - "&FORMAT(_end,"mm/dd/yy") 
+			    )
+			```
+		lineageTag: fea8e4dc-fa31-4b07-9f35-861ac3251d9e
+
+	column Date
+		formatString: General Date
+		lineageTag: a85ecaee-ff92-4dd4-815f-1639926dd114
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: 5e7b8a15-464c-46a5-932e-b0cbec541c83
+			defaultHierarchy: LocalDateTable_8f127bcc-ccdd-41ab-9265-a9a662b33416.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period
+		lineageTag: 7a9af260-abd9-4928-9965-cfbb8213358c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Period]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		formatString: 0
+		lineageTag: f2b8ee0e-5cb4-44be-81f9-8db5b65840c2
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Order]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateId = 1
+		formatString: 0
+		lineageTag: 63ce4d44-c8e7-47f2-b142-989dea0fe690
+		summarizeBy: count
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SpecialDates = calculated
+		mode: import
+		source = ```
+				
+				VAR _datetable = CALENDAR(Date(2015,01,01), TODAY())
+				VAR _today = TODAY()
+				VAR _month = MONTH(_today)
+				VAR _year = YEAR(_today)
+				VAR _thismonthstart = DATE(_year, _month, 1)
+				VAR _thisyearstart = DATE(_year, 1, 1)
+				VAR _lastmonthstart = EDATE(_thismonthstart, -1)
+				VAR _lastmonthend = _thismonthstart - 1
+				VAR _ThisWeek = WEEKNUM(_today, 2)
+				VAR _lastweek = _ThisWeek - 1
+				VAR _thisquarterstart =
+				    DATE(_year,
+				        SWITCH(TRUE(),
+				            _month > 9, 10,
+				            _month > 6, 7,
+				            _month > 3, 4,
+				            1
+				        ),
+				    1
+				    )
+				VAR _lastquarterstart =
+				    SWITCH(
+				        TRUE(),
+				        _month IN {1, 2, 3}, DATE(_year - 1, 10, 1),   // Last Quarter = Q4 of previous year
+				        _month IN {4, 5, 6}, DATE(_year, 1, 1),        // Last Quarter = Q1 of this year
+				        _month IN {7, 8, 9}, DATE(_year, 4, 1),        // Last Quarter = Q2 of this year
+				        DATE(_year, 7, 1)                              // Last Quarter = Q3 of this year
+				    )
+				VAR _lastquarterend =
+				    SWITCH(
+				        TRUE(),
+				        _month IN {1, 2, 3}, DATE(_year - 1, 12, 31),  // Q4 end of previous year
+				        _month IN {4, 5, 6}, DATE(_year, 3, 31),       // Q1 end
+				        _month IN {7, 8, 9}, DATE(_year, 6, 30),       // Q2 end
+				        DATE(_year, 9, 30)                             // Q3 end
+				    )
+				VAR _blank = BLANK()
+				
+				
+				
+				-- Last day of this week (assuming week starts on Monday)
+				VAR _lastday_thisweek = _today + (7 - WEEKDAY(_today, 2))
+				
+				-- Start of this week (assuming Monday as first day of week)
+				VAR _start_thisweek = _today - WEEKDAY(_today, 2) + 1
+				
+				-- End of this week
+				VAR _end_thisweek = _start_thisweek + 6
+				
+				-- Last day of this month
+				VAR _lastday_thismonth = EOMONTH(_today, 0)
+				
+				-- Last day of this quarter
+				VAR _lastday_thisquarter =
+				    SWITCH(
+				        TRUE(),
+				        MONTH(_today) IN {1, 2, 3}, DATE(YEAR(_today), 3, 31),
+				        MONTH(_today) IN {4, 5, 6}, DATE(YEAR(_today), 6, 30),
+				        MONTH(_today) IN {7, 8, 9}, DATE(YEAR(_today), 9, 30),
+				        DATE(YEAR(_today), 12, 31)
+				    )
+				
+				-- Last day of this year
+				VAR _lastday_thisyear = DATE(YEAR(_today), 12, 31)
+				-- First day of next month
+				VAR _firstday_nextmonth = EOMONTH(_today, 0) + 1
+				
+				-- Last day of next month
+				VAR _lastday_nextmonth = EOMONTH(_today, 1)
+				RETURN
+				UNION(
+				    ADDCOLUMNS(FILTER(_datetable, [Date] = _today), "Period", "Today", "Order", 1),
+				    ADDCOLUMNS(FILTER(_datetable, [Date] = _today - 1), "Period", "Yesterday", "Order", 2),
+				    ADDCOLUMNS(FILTER(_datetable, YEAR([Date]) = _year - 1), "Period", "Last Year", "Order", 11),
+				    ADDCOLUMNS(FILTER(
+				        _datetable,
+				        [Date] >= _start_thisweek && [Date] <= _end_thisweek
+				    ), "Period", "This Week", "Order", 3),
+				    ADDCOLUMNS(FILTER(_datetable, [Date] >= _thismonthstart && [Date]<=_lastday_thismonth), "Period", "This Month", "Order", 5),
+				    ADDCOLUMNS(FILTER(_datetable, [Date] >= _thisquarterstart && [Date]<= _lastday_thisquarter), "Period", "This Quarter", "Order", 6),
+				    ADDCOLUMNS(FILTER(_datetable, [Date] >= _thisyearstart && [Date] <= _lastday_thisyear), "Period", "This Year", "Order", 7),
+				    ADDCOLUMNS(FILTER(_datetable, [Date] >= _firstday_nextmonth && [Date] <= _lastday_nextmonth), "Period", "Next Month", "Order", 10),
+				    ADDCOLUMNS(FILTER(_datetable, WEEKNUM([Date], 1) = _lastweek && YEAR([Date]) = _year), "Period", "Last Week", "Order", 4),
+				    ADDCOLUMNS(FILTER(_datetable, [Date] >= _lastmonthstart && [Date] <= _lastmonthend), "Period", "Last Month", "Order", 8),
+				    ADDCOLUMNS(FILTER(_datetable, [Date] >= _lastquarterstart && [Date] <= _lastquarterend), "Period", "Last Quarter", "Order", 9),
+				    ADDCOLUMNS(_datetable, "Period", "Custom...", "Order", 10),
+				    ADDCOLUMNS(_datetable, "Period", "ToDate", "Order", 0)
+				)
+				
+				```
+
+	annotation PBI_Id = 91affbf288f948328ac645df4c8e792f
+

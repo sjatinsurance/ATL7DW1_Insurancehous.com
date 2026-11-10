@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "PPA Vehicle To Driver Ratio Detail"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "85a3a81f-f1de-93e8-4683-41a315ff54de"
+  }
+}

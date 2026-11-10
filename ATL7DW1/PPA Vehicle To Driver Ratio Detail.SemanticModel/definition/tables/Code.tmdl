@@ -1,0 +1,35 @@
+table Code
+	lineageTag: 177219c6-8bc9-4df4-9f52-e8e592620055
+
+	measure Count = COUNTROWS()
+		formatString: 0
+		lineageTag: 3ee7c8bd-e85a-4b6f-8b2d-5f80d0a70fab
+
+	column ID = 0
+		formatString: 0
+		lineageTag: 0b9f03c8-e610-4c98-a33e-7f5d57d7d462
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column SMTRCD
+		dataType: string
+		lineageTag: e4f1bc50-e7b6-451d-ae2c-b3a75c5a6c12
+		summarizeBy: none
+		sourceColumn: SMTRCD
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Code = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("ATL1DW1", "sis_core_dw", [Query="select Distinct SMTRCD from sisprdd250.ST_ALSTMF"]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each true)
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
